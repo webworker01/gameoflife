@@ -4,7 +4,7 @@ namespace webworker01\GameOfLife;
  * Game of Life in PHP
  *
  * @package webworker01\GameOfLife
- * @author ***REMOVED***
+ * @author owencole@gmail.com
  * @since 20140121
  * @copyright Copyright © Owen Cole 2014
  * @link http://en.wikipedia.org/wiki/Conway's_Game_of_Life#Rules Rules of the game

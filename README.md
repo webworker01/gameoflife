@@ -1,5 +1,3 @@
-You can write a problem statement, single out the nouns and verbs, and create corresponding classes and operations.
-
 Game of Life in PHP
 ===================
 
@@ -30,7 +28,7 @@ In this interpretation of the Game of Life we will strive to add some additional
 ** Longevity of a cell
 ** "Dead zones" on the grid
 ** Nomad cells
-* Saving interesting starting configurations based on final states of infinte loops of repeated movement
+* Saving interesting starting configurations based on final states of infinite loops of repeated movement
 * Allow for user input of some sort to modify the seeding configurations
 * Multiple views
 ** HTML5 / jQuery

@@ -1,22 +1,33 @@
 <?php
-namespace webworker01\GameOfLife;
 /**
  * Game of Life in PHP
  *
  * @package webworker01\GameOfLife
- * @author ***REMOVED***
- * @since 20140121
+ * @author webworker@live.com
+ * @since PHP 5.4.x 1/21/14 5:17 PM
  * @copyright Copyright © ***REMOVED*** 2014
  * @link http://en.wikipedia.org/wiki/Conway's_Game_of_Life#Rules Rules of the game
  */
 
+namespace webworker01\GameOfLife;
+
 /**
  * Class Map
- *
+ * Represents the map in the game
+ * @package webworker01\GameOfLife
  */
 class Map
 {
+    /**
+     * The total number of points across in the map
+     * @var int|int
+     */
     public $xSize;
+
+    /**
+     * The total number of points vertical in the map
+     * @var int|int
+     */
     public $ySize;
 
     /**
@@ -51,5 +62,15 @@ class Map
         }
 
         return $newMap;
+    }
+
+    /**
+     * Set up the map with initial values
+     *
+     * @param array $coordinates
+     */
+    public function seed(Array $coordinates)
+    {
+
     }
 }

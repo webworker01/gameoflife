@@ -34,6 +34,12 @@ class Cell
      */
     protected $state;
 
+    /**
+     * Stored new state of the cell
+     * @var
+     */
+    protected $newState;
+
     public function __construct($x, $y, $state = false)
     {
         $this->x = $x;
@@ -41,6 +47,29 @@ class Cell
         $this->state = $state;
     }
 
+    /**
+     * Setter for the new state
+     * @param $state
+     */
+    public function setState($state)
+    {
+        $this->newState = $state;
+    }
+
+    /**
+     * Persist the new state to the actual state
+     */
+    public function persist()
+    {
+        $this->state = $this->newState;
+    }
+
+    /**
+     * Generic getter method
+     *
+     * @param $variable
+     * @return mixed
+     */
     public function __get($variable)
     {
         return $this->$variable;

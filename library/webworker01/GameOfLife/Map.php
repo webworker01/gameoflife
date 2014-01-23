@@ -59,19 +59,37 @@ class Map
      */
     public function tick()
     {
+
+        //Parse the existing state of the map for the game rules
         for ($y = 0; $y < $this->ySize; $y++) {
             for ($x = 0; $x < $this->xSize; $x++) {
-                //$this->cells[$x][$y];
+
+                $liveNeighbors = $this->cells[$x-1][$y-1]->state + $this->cells[$x][$y-1]->state + $this->cells[$x+1][$y-1]->state
+                                + $this->cells[$x-1][$y]->state + $this->cells[$x+1][$y]->state
+                                + $this->cells[$x-1][$y+1]->state + $this->cells[$x][$y+1]->state + $this->cells[$x+1][$y+1]->state;
+
+                if ($liveNeighbors < 2) {
+                    $this->cells[$x][$y]->setState(0);
+                } elseif ($liveNeighbors < 4) {
+                    $this->cells[$x][$y]->setState(1);
+                } elseif ($liveNeighbors == 3) {
+                    $this->cells[$x][$y]->setState(1);
+                } else {
+                    $this->cells[$x][$y]->setState(0);
+                }
             }
         }
 
-        //return $newMap;
+        //Persist the updated map
+        for ($y = 0; $y < $this->ySize; $y++) {
+            for ($x = 0; $x < $this->xSize; $x++) {
+                $this->cells[$x][$y]->persist();
+            }
+        }
     }
 
     /**
      * Set up the map with initial values
-     *
-     * @param array $coordinates
      */
     public function seed()
     {
@@ -91,11 +109,12 @@ class Map
         $stringOutput = '';
 
         for ($y = 0; $y < $this->ySize; $y++) {
+//            $stringOutput .= sprintf("%02d", $y).' - ';
             for ($x = 0; $x < $this->xSize; $x++) {
                 if ($this->cells[$x][$y]->state == false) {
-                    $stringOutput .= '.';
+                    $stringOutput .= '&nbsp;';
                 } else {
-                    $stringOutput .= 'O';
+                    $stringOutput .= '&#9608;';
                 }
             }
 

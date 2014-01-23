@@ -16,5 +16,33 @@ namespace webworker01\GameOfLife;
  */
 class Cell
 {
+    /**
+     * The x coordinate for this cell
+     * @var
+     */
+    protected $x;
 
-} 
+    /**
+     * The y coordinate for this cell
+     * @var
+     */
+    protected $y;
+
+    /**
+     * Current state of the cell
+     * @var
+     */
+    protected $state;
+
+    public function __construct($x, $y, $state = false)
+    {
+        $this->x = $x;
+        $this->y = $y;
+        $this->state = $state;
+    }
+
+    public function __get($variable)
+    {
+        return $this->$variable;
+    }
+}

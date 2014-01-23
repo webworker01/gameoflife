@@ -1,8 +1,5 @@
 {
     "require": {
-        "gabordemooij/redbean": "dev-master",
-        "twig/twig": "dev-master",
-        "twitter/bootstrap": "dev-master",
         "monolog/monolog": "1.7.*@dev"
     }
 }

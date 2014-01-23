@@ -40,7 +40,7 @@ class Cell
      */
     protected $newState;
 
-    public function __construct($x, $y, $state = false)
+    public function __construct($x, $y, $state = 0)
     {
         $this->x = $x;
         $this->y = $y;
@@ -54,6 +54,11 @@ class Cell
     public function setState($state)
     {
         $this->newState = $state;
+    }
+
+    public function setColor($color)
+    {
+        $this->color = $color;
     }
 
     /**

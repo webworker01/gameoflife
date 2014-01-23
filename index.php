@@ -26,8 +26,8 @@ require 'vendor/autoload.php';
 use webworker01\GameOfLife;
 
 //See if we have a map stored already for the session
-if (empty($_SESSION['map']) || $_GET['seed'] == 'true') {
-    $map = new webworker01\GameOfLife\Map(267, 100);
+if (empty($_SESSION['map']) || isset($_GET['seed'])) {
+    $map = new webworker01\GameOfLife\Map(80, 75);
 
     $map->seed();
 } else {
@@ -88,7 +88,7 @@ function diff_microtime($mt_old,$mt_new) {
 
         #map {
             color: #000;
-            font-size: 5px;
+            font-size: 8px;
             margin: 30px auto;
             background-color: #CCC;
             border:1px solid black;
@@ -132,7 +132,7 @@ function diff_microtime($mt_old,$mt_new) {
             reloadInterval -= 100;
 
             if (reloadInterval < 1 && autoReload) {
-                location.reload();
+                window.location = './';
                 clearInterval(i);
 
                 $('#menu').replaceWith('<div id="menu">Loading...</div>');
@@ -142,7 +142,13 @@ function diff_microtime($mt_old,$mt_new) {
         }, 100);
     });
 </script>
-
+    <div id="rules">
+        <ul>
+            <li>Any live cell with fewer than two live neighbours dies, as if caused by under-population.</li>
+            <li>Any live cell with two or three live neighbours lives on to the next generation.</li>
+            <li>Any live cell with more than three live neighbours dies, as if by overcrowding.</li>
+            <li>Any dead cell with exactly three live neighbours becomes a live cell, as if by reproduction.</li>
+    </div>
     <div id="runtime"><?= (1000 * number_format(diff_microtime($runTimeStart, microtime()), 3)); ?>ms</div>
 </body>
 </html>

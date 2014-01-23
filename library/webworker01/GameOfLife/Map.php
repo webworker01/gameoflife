@@ -59,10 +59,11 @@ class Map
      */
     public function tick()
     {
-
         //Parse the existing state of the map for the game rules
         for ($y = 0; $y < $this->ySize; $y++) {
             for ($x = 0; $x < $this->xSize; $x++) {
+
+                $currentState = $this->cells[$x][$y]->state;
 
                 $liveNeighbors = $this->cells[$x-1][$y-1]->state + $this->cells[$x][$y-1]->state + $this->cells[$x+1][$y-1]->state
                                 + $this->cells[$x-1][$y]->state + $this->cells[$x+1][$y]->state
@@ -70,7 +71,7 @@ class Map
 
                 if ($liveNeighbors < 2) {
                     $this->cells[$x][$y]->setState(0);
-                } elseif ($liveNeighbors < 4) {
+                } elseif ($liveNeighbors < 4 && $currentState) {
                     $this->cells[$x][$y]->setState(1);
                 } elseif ($liveNeighbors == 3) {
                     $this->cells[$x][$y]->setState(1);
@@ -95,7 +96,16 @@ class Map
     {
         for ($y = 0; $y < $this->ySize; $y++) {
             for ($x = 0; $x < $this->xSize; $x++) {
-                $this->cells[$x][$y] = new Cell($x, $y, mt_rand(0, 1));
+
+                $random = mt_rand(0, 100);
+
+                if ($random < 75) {
+                    $state = 0;
+                } else {
+                    $state = 1;
+                }
+
+                $this->cells[$x][$y] = new Cell($x, $y, $state);
             }
         }
     }
@@ -111,10 +121,10 @@ class Map
         for ($y = 0; $y < $this->ySize; $y++) {
 //            $stringOutput .= sprintf("%02d", $y).' - ';
             for ($x = 0; $x < $this->xSize; $x++) {
-                if ($this->cells[$x][$y]->state == false) {
-                    $stringOutput .= '&nbsp;';
+                if ($this->cells[$x][$y]->state < 1) {
+                    $stringOutput .= '<span style="background-color:'.$this->cells[$x][$y]->color.'">&nbsp;&nbsp;</span>';
                 } else {
-                    $stringOutput .= '&#9608;';
+                    $stringOutput .= '<span style="color:'.$this->cells[$x][$y]->color.'">&#9608;&#9608;</span>';
                 }
             }
 

@@ -70,6 +70,30 @@ class Map
     }
 
     /**
+     * This method imports a 2D array of points into the object and replaces the existing map if it exists
+     * @param $map A two dimensional array of boolean data representing cell states
+     */
+    public function setCoordinates($map)
+    {
+        //Create cells from the passed in map
+        $this->xSize = count($map);
+        $maxRows = 0;
+
+        foreach ($map as $column => $row) {
+            foreach ($row as $stateData) {
+                $this->cells[$column][$row] = new Cell($x, $y, $stateData);
+            }
+
+            $numberRows = count($row);
+            if ($numberRows > $maxRows) {
+                $maxRows = $numberRows;
+            }
+        }
+
+        $this->ySize = $maxRows;
+    }
+
+    /**
      * Do what needs to be done to create the next transition
      *
      * Any live cell with fewer than two live neighbours dies, as if caused by under-population.

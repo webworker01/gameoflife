@@ -38,27 +38,63 @@
         //First draw
         drawmap(mapElement, settings.xSize, settings.coordinates);
 
-        refreshmap(settings.ajaxPath, mapElement, settings.xSize);
+        setInterval(function() {
+            //refreshmap(settings.ajaxPath, mapElement, settings.xSize);
+            newCoordinates = refreshmap(settings.coordinates);
+
+            $(mapElement).html('');
+            drawmap(mapElement, settings.xSize, newCoordinates);
+        }, 100);
     }
 
-    function refreshmap(path, mapElement, xSize) {
-        if (autoReload) {
-            $.ajax({
-                url : path,
-                type : 'POST',
-                data : encodeURI('ajax=ajax'),
-                dataType : 'json',
-                timeout : 20000,
-                error : function(obj, errortype, errormessage) {
-                    $('#debug').html('Tick failed');
-                },
-                success: function(data) {
-                    $(mapElement).html('');
-                    drawmap(mapElement, xSize, data);
-                    refreshmap(path, mapElement, xSize);
+    //function refreshmap(path, mapElement, xSize) {
+    function refreshmap(coordinates) {
+        /*
+         * Any live cell with fewer than two live neighbours dies, as if caused by under-population.
+         * Any live cell with two or three live neighbours lives on to the next generation.
+         * Any live cell with more than three live neighbours dies, as if by overcrowding.
+         * Any dead cell with exactly three live neighbours becomes a live cell, as if by reproduction.
+         */
+        //Parse the existing state of the map for the game rules
+        var newMap = Array();
+        $.each(coordinates, function (x) {
+            var rowMap = Array();
+            $.each(this, function (y, value) {
+
+                $('#debug').html(x + ' ' + y);
+
+                var liveNeighbors =
+                    ((typeof coordinates[(x)-1] == 'undefined' || typeof coordinates[(x)-1][(y)-1] == 'undefined') ? 0 : coordinates[(x)-1][(y)-1])
+                        + ((typeof coordinates[x] == 'undefined' || typeof coordinates[x][(y)-1] == 'undefined') ? 0 : coordinates[x][(y)-1])
+                        + ((typeof coordinates[(x)+1] == 'undefined' || typeof coordinates[(x)+1][(y)-1] == 'undefined') ? 0 : coordinates[(x)+1][(y)-1])
+                        + ((typeof coordinates[(x)-1] == 'undefined' || typeof coordinates[(x)-1][y]  == 'undefined') ? 0 : coordinates[(x)-1][y])
+                        + ((typeof coordinates[(x)+1] == 'undefined' || typeof coordinates[(x)+1][y] == 'undefined') ? 0 : coordinates[(x)+1][y])
+                        + ((typeof coordinates[(x)-1] == 'undefined' || typeof coordinates[(x)-1][(y)+1] == 'undefined') ? 0 : coordinates[(x)-1][(y)+1])
+                        + ((typeof coordinates[x] == 'undefined' || typeof coordinates[x][(y)+1] == 'undefined') ? 0 : coordinates[x][(y)+1])
+                        + ((typeof coordinates[(x)+1] == 'undefined' || typeof coordinates[(x)+1][(y)+1] == 'undefined') ? 0 : coordinates[(x)+1][(y)+1])
+
+                if (liveNeighbors < 2) {
+                    rowMap[y] = 0;
+                } else if (liveNeighbors < 4 && value) {
+                    rowMap[y] = 1;
+                } else if (liveNeighbors == 3) {
+                    rowMap[y] = 1;
+                } else {
+                    rowMap[y] = 0;
                 }
             });
-        }
+
+            newMap[x] = rowMap;
+        });
+
+        //Persist the updated map
+        $.each(newMap, function (x) {
+            $.each(this, function (y, value) {
+                coordinates[x][y] = value;
+            });
+        });
+
+        return coordinates;
     }
 
     function drawmap (mapElement, xSize, coordinates) {

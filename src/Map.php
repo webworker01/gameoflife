@@ -14,7 +14,7 @@ namespace webworker01\gameoflife;
 /**
  * Class Map
  * Represents the map in the game
- * @package webworker01\GameOfLife
+ * @package webworker01\gameoflife
  */
 class Map
 {

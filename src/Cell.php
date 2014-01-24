@@ -13,7 +13,7 @@ namespace webworker01\gameoflife;
 /**
  * Class Cell
  * Represents an individual cell in the game
- * @package webworker01\GameOfLife
+ * @package webworker01\gameoflife
  */
 class Cell
 {

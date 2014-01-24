@@ -21,8 +21,6 @@
  *
  */
 (function( $ ) {
-    var autoReload = true;
-
     $.fn.gameoflife = function(options) {
 
         //Set up default options and import user defined options
@@ -35,16 +33,41 @@
 
         var mapElement = this;
 
+        $('html body').append('<div id="gameoflifeMenu"><a id="seedLink" href="./?seed=true">Reseed</a> | <a id="pause">Pause</a><a id="start" style="display:none">Start</a></div>');
+
+        $('#seedLink').click(function() {
+            clearInterval(tick);
+        });
+
+        $('#gameoflifeMenu #pause').click(function() {
+            clearInterval(tick);
+            $(this).hide();
+            $('#gameoflifeMenu #start').show();
+        });
+
+        $('#gameoflifeMenu #start').click(function() {
+            autoReload = true;
+
+            tick = setInterval(function() {
+                tickActions(mapElement, settings);
+            }, 1);
+
+            $(this).hide();
+            $('#gameoflifeMenu #pause').show();
+        });
+
         //First draw
         drawmap(mapElement, settings.xSize, settings.coordinates);
 
-        setInterval(function() {
-            //refreshmap(settings.ajaxPath, mapElement, settings.xSize);
-            newCoordinates = refreshmap(settings.coordinates);
-
-            $(mapElement).html('');
-            drawmap(mapElement, settings.xSize, newCoordinates);
+        var tick = setInterval(function() {
+            tickActions(mapElement, settings);
         }, 1);
+    }
+
+    function tickActions(mapElement, settings) {
+        newCoordinates = refreshmap(settings.coordinates);
+        $(mapElement).html('');
+        drawmap(mapElement, settings.xSize, newCoordinates);
     }
 
     //function refreshmap(path, mapElement, xSize) {
@@ -60,9 +83,6 @@
         $.each(coordinates, function (x) {
             var rowMap = Array();
             $.each(this, function (y, value) {
-
-                $('#debug').html(x + ' ' + y);
-
                 var liveNeighbors =
                     ((typeof coordinates[(x)-1] == 'undefined' || typeof coordinates[(x)-1][(y)-1] == 'undefined') ? 0 : coordinates[(x)-1][(y)-1])
                         + ((typeof coordinates[x] == 'undefined' || typeof coordinates[x][(y)-1] == 'undefined') ? 0 : coordinates[x][(y)-1])

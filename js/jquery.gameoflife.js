@@ -44,7 +44,7 @@
 
             $(mapElement).html('');
             drawmap(mapElement, settings.xSize, newCoordinates);
-        }, 100);
+        }, 1);
     }
 
     //function refreshmap(path, mapElement, xSize) {

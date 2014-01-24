@@ -9,7 +9,7 @@
  * @link http://en.wikipedia.org/wiki/Conway's_Game_of_Life#Rules Rules of the game
  */
 
-namespace webworker01\GameOfLife;
+namespace webworker01\gameoflife;
 
 /**
  * Class Map

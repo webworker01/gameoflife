@@ -40,7 +40,34 @@ A simple example to get started with the library
     }
     $_SESSION['map'] = serialize($map);
 
-    echo $map;
+From here you can simply print out some HTML to see the current generation of the map
+
+    <html>
+    ...
+    <?php echo $map; ?>
+    ...
+    </html>
+
+Or for a more animated version, use the included jquery plugin in your HTML
+
+    <html>
+        <head>
+            <script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+            <script src="./vendor/webworker01/gameoflife/js/jquery.gameoflife.js"></script>
+            <link href="./vendor/webworker01/gameoflife/css/gameoflife.css" rel="stylesheet" type="text/css">
+        </head>
+        <body>
+            <div id="gameoflife"></div>
+
+            <script>
+            $(function() {
+                $('#gameoflife').gameoflife({
+                    coordinates: <?= $map->output('json'); ?>;
+                });
+            });
+            </script>
+        </body>
+    </html>
 
 Why Another Game of Life?
 -------------------------
@@ -58,6 +85,6 @@ In this interpretation of the Game of Life we will strive to add some additional
 ** Nomad cells
 * Saving interesting starting configurations based on final states of infinite loops of repeated movement
 * Allow for user input of some sort to modify the seeding configurations
-* Multiple views
-** HTML5 / jQuery
+* Additional views
 ** Animated GIF/PNG
+** HTML5 Canvas

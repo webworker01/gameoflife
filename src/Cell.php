@@ -7,7 +7,7 @@
  * @copyright Copyright © ***REMOVED*** 2014
  */
 
-namespace webworker01\GameOfLife;
+namespace webworker01\gameoflife;
 
 /**
  * Class Cell

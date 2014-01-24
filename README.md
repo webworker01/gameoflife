@@ -14,6 +14,34 @@ A timer function scans the entire grid and applies the following four simple rul
 
 The timer then continues ad infinitum, applying these rules to all cells in the grid simultaneously.
 
+Getting Started
+---------------
+
+To start using this library add the following lines to your composer.json
+
+    "require": {
+        "webworker01/gameoflife": "dev-master"
+    }
+
+A simple example to get started with the library
+
+    //Add composer autoloader
+    require 'vendor/autoload.php';
+
+    use webworker01\gameoflife;
+
+    //See if we have a map stored already for the session
+    if (empty($_SESSION['map'])) {
+        $map = new webworker01\gameoflife\Map(80, 75);
+        $map->seed();
+    } else {
+        $map = unserialize($_SESSION['map']);
+        $map->tick();
+    }
+    $_SESSION['map'] = serialize($map);
+
+    echo $map;
+
 Why Another Game of Life?
 -------------------------
 

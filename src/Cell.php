@@ -2,9 +2,10 @@
 /**
  * Game of Life in PHP
  * @package webworker01\gameoflife
- * @author webworker@live.com
+ * @author webworker01 <webworker@live.com>
  * @since PHP 5.4.x 1/22/14 2:27 PM
- * @copyright Copyright © ***REMOVED*** 2014
+ * @license http://opensource.org/licenses/MIT
+ * @copyright Copyright © webworker01 <webworker@live.com> 2014
  */
 
 namespace webworker01\gameoflife;

@@ -1,11 +1,11 @@
 <?php
 /**
  * Game of Life in PHP
- *
  * @package webworker01\gameoflife
- * @author webworker@live.com
- * @since PHP 5.4.x 1/21/14 5:17 PM
- * @copyright Copyright © ***REMOVED*** 2014
+ * @author webworker01 <webworker@live.com>
+ * @since PHP 5.4.x 1/22/14 2:27 PM
+ * @license http://opensource.org/licenses/MIT
+ * @copyright Copyright © webworker01 <webworker@live.com> 2014
  * @link http://en.wikipedia.org/wiki/Conway's_Game_of_Life#Rules Rules of the game
  */
 

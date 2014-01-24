@@ -2,7 +2,7 @@
 /**
  * Game of Life in PHP
  *
- * @package webworker01\GameOfLife
+ * @package webworker01\gameoflife
  * @author webworker@live.com
  * @since PHP 5.4.x 1/21/14 5:17 PM
  * @copyright Copyright © ***REMOVED*** 2014

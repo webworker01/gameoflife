@@ -18,7 +18,7 @@
     },
     "autoload": {
         "psr-4": {
-            "webworker01\\gameoflife": "src"
+            "webworker01\\gameoflife\\": "src"
         }
     }
 }

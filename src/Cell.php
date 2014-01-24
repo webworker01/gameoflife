@@ -1,7 +1,7 @@
 <?php
 /**
  * Game of Life in PHP
- * @package webworker01\GameOfLife
+ * @package webworker01\gameoflife
  * @author webworker@live.com
  * @since PHP 5.4.x 1/22/14 2:27 PM
  * @copyright Copyright © Owen Cole 2014

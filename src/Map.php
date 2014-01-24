@@ -49,6 +49,27 @@ class Map
     }
 
     /**
+     * Set up the map with initial values
+     */
+    public function seed()
+    {
+        for ($y = 0; $y < $this->ySize; $y++) {
+            for ($x = 0; $x < $this->xSize; $x++) {
+
+                $random = mt_rand(0, 100);
+
+                if ($random < 75) {
+                    $state = 0;
+                } else {
+                    $state = 1;
+                }
+
+                $this->cells[$x][$y] = new Cell($x, $y, $state);
+            }
+        }
+    }
+
+    /**
      * Do what needs to be done to create the next transition
      *
      * Any live cell with fewer than two live neighbours dies, as if caused by under-population.
@@ -90,23 +111,35 @@ class Map
     }
 
     /**
-     * Set up the map with initial values
+     * Outputs the current state of the grid in multiple formats
+     * @param String $format (array|json) are the current options
+     * @return mixed The current state of the grid in the requested format
      */
-    public function seed()
+    public function output($format='array')
     {
-        for ($y = 0; $y < $this->ySize; $y++) {
-            for ($x = 0; $x < $this->xSize; $x++) {
+        $output = Array();
 
-                $random = mt_rand(0, 100);
-
-                if ($random < 75) {
-                    $state = 0;
-                } else {
-                    $state = 1;
+        switch ($format) {
+            case 'json':
+                //Persist the updated map
+                for ($y = 0; $y < $this->ySize; $y++) {
+                    for ($x = 0; $x < $this->xSize; $x++) {
+                        $output[$y][$x] = $this->cells[$x][$y]->state;
+                    }
+                }
+                return json_encode($output);
+                break;
+            case 'array':
+            default:
+                //Persist the updated map
+                for ($y = 0; $y < $this->ySize; $y++) {
+                    for ($x = 0; $x < $this->xSize; $x++) {
+                        $output[$x][$y] = $this->cells[$x][$y]->state;
+                    }
                 }
 
-                $this->cells[$x][$y] = new Cell($x, $y, $state);
-            }
+                return $output;
+                break;
         }
     }
 

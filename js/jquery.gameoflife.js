@@ -55,7 +55,7 @@
                 success: function(data) {
                     $(mapElement).html('');
                     drawmap(mapElement, xSize, data);
-                    refreshmap(mapElement, xSize);
+                    refreshmap(path, mapElement, xSize);
                 }
             });
         }

@@ -53,7 +53,7 @@
 
             tick = setInterval(function() {
                 tickActions(mapElement, settings);
-            }, 1);
+            }, 50); //Should be approximately 20 FPS
 
             $(this).hide();
             $('#gameoflifeMenu #pause').show();
@@ -65,7 +65,6 @@
 
     function tickActions(mapElement, settings) {
         newCoordinates = refreshmap(settings.coordinates);
-        //$(mapElement).html('');
         drawmap(mapElement, newCoordinates);
     }
 

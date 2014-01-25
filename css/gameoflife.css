@@ -6,13 +6,16 @@
     background-color: #CCC;
     border:1px solid black;
     width:800px;
+    position: relative;
 }
 
 #gameoflife .on {
     color:green;
+    background-color:black;
 }
 
 #gameoflife .off {
+    color: black;
     background-color:black;
 }
 
@@ -20,6 +23,8 @@
     position:absolute;
     top:0;
     right:0;
+    text-align: right;
+    font-size:12px;
 }
 
 #gameoflifeMenu a, #gameoflifeMenu a:visited {

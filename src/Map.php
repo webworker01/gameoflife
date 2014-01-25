@@ -50,47 +50,24 @@ class Map
 
     /**
      * Set up the map with initial values
+     * @param int $seedPercentage Allows for a custom seed percentage
      */
-    public function seed()
+    public function seed($seedPercentage = 25)
     {
         for ($y = 0; $y < $this->ySize; $y++) {
             for ($x = 0; $x < $this->xSize; $x++) {
 
                 $random = mt_rand(0, 100);
 
-                if ($random < 75) {
-                    $state = 0;
-                } else {
+                if ($random < $seedPercentage) {
                     $state = 1;
+                } else {
+                    $state = 0;
                 }
 
                 $this->cells[$x][$y] = new Cell($x, $y, $state);
             }
         }
-    }
-
-    /**
-     * This method imports a 2D array of points into the object and replaces the existing map if it exists
-     * @param $map A two dimensional array of boolean data representing cell states
-     */
-    public function setCoordinates($map)
-    {
-        //Create cells from the passed in map
-        $this->xSize = count($map);
-        $maxRows = 0;
-
-        foreach ($map as $column => $row) {
-            foreach ($row as $stateData) {
-                $this->cells[$column][$row] = new Cell($x, $y, $stateData);
-            }
-
-            $numberRows = count($row);
-            if ($numberRows > $maxRows) {
-                $maxRows = $numberRows;
-            }
-        }
-
-        $this->ySize = $maxRows;
     }
 
     /**
@@ -146,9 +123,9 @@ class Map
         switch ($format) {
             case 'json':
                 //Persist the updated map
-                for ($y = 0; $y < $this->ySize; $y++) {
-                    for ($x = 0; $x < $this->xSize; $x++) {
-                        $output[$y][$x] = $this->cells[$x][$y]->state;
+                for ($x = 0; $x < $this->xSize; $x++) {
+                    for ($y = 0; $y < $this->ySize; $y++) {
+                        $output[$x][$y] = $this->cells[$x][$y]->state;
                     }
                 }
                 return json_encode($output);
@@ -176,7 +153,6 @@ class Map
         $stringOutput = '';
 
         for ($y = 0; $y < $this->ySize; $y++) {
-//            $stringOutput .= sprintf("%02d", $y).' - ';
             for ($x = 0; $x < $this->xSize; $x++) {
                 if ($this->cells[$x][$y]->state < 1) {
                     $stringOutput .= '<span style="background-color:'.$this->cells[$x][$y]->color.'">&nbsp;&nbsp;</span>';

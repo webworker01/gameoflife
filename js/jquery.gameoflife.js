@@ -33,7 +33,10 @@
 
         var mapElement = this;
 
-        $('html body').append('<div id="gameoflifeMenu"><a id="seedLink" href="./?seed=true">Reseed</a> | <a id="pause">Pause</a><a id="start" style="display:none">Start</a></div>');
+        //Create the blank map
+        blankmap(mapElement, settings.xSize, settings.ySize);
+
+        $(mapElement).append('<div id="gameoflifeMenu"><a id="seedLink" href="./?seed=true">Reseed</a><br><a id="pause" style="display:none">Pause</a><a id="start">Start</a></div>');
 
         $('#seedLink').click(function() {
             clearInterval(tick);
@@ -57,20 +60,20 @@
         });
 
         //First draw
-        drawmap(mapElement, settings.xSize, settings.coordinates);
-
-        var tick = setInterval(function() {
-            tickActions(mapElement, settings);
-        }, 1);
+        drawmap(mapElement, settings.coordinates);
     }
 
     function tickActions(mapElement, settings) {
         newCoordinates = refreshmap(settings.coordinates);
-        $(mapElement).html('');
-        drawmap(mapElement, settings.xSize, newCoordinates);
+        //$(mapElement).html('');
+        drawmap(mapElement, newCoordinates);
     }
 
-    //function refreshmap(path, mapElement, xSize) {
+    /**
+     * Runs the rules for the game
+     * @param coordinates
+     * @returns {*}
+     */
     function refreshmap(coordinates) {
         /*
          * Any live cell with fewer than two live neighbours dies, as if caused by under-population.
@@ -117,17 +120,39 @@
         return coordinates;
     }
 
-    function drawmap (mapElement, xSize, coordinates) {
-        $.each(coordinates, function (row) {
-            $.each(this, function (index, value) {
-                if (value == 0) {
-                    mapElement.append('<span class="off" data-x="'+index+'" data-y="'+row+'">&nbsp;&nbsp;</span>');
-                } else {
-                    mapElement.append('<span class="on" data-x="'+index+'" data-y="'+row+'">&#9608;&#9608;</span>');
-                }
+    /**
+     * Generate a blank grid on the map
+     * @param xSize The total width of the grid
+     * @param ySize The total height of the grid
+     */
+    function blankmap(mapElement, xSize, ySize) {
 
-                if (index+1 == xSize) {
-                    mapElement.append('<br>');
+        for (var y=0; y < ySize; y++) {
+            var appendString = '';
+
+            for (var x=0; x < xSize ; x++) {
+                appendString += '<span class="off" id="cell-'+x+'-'+y+'">&#9608;&#9608;</span>';
+            }
+
+            appendString += '<br>';
+
+            mapElement.append(appendString);
+        }
+    }
+
+    /**
+     * Draw the map points
+     * @param mapElement the element that contains the map points
+     * @param xSize max horizontal size
+     * @param coordinates contains all the points on the map and their state
+     */
+    function drawmap (mapElement, coordinates) {
+        $.each(coordinates, function (x) {
+            $.each(this, function (y, value) {
+                if (value == 0) {
+                    $('#cell-'+x+'-'+y).addClass('off').removeClass('on');
+                } else {
+                    $('#cell-'+x+'-'+y).addClass('on').removeClass('off');
                 }
             });
         });
